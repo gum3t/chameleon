@@ -90,7 +90,7 @@ class MutationPatternPool:
 
         # verbose related
         if verbose:
-            self.print_mutations(block.ops[ins_idx:ins_idx+n_match_ins], new_instructions) 
+            self.print_mutations(block.ops[ins_idx].addr, block.ops[ins_idx:ins_idx+n_match_ins], new_instructions) 
 
         # inject new Instruction objects
         block.ops[ins_idx:ins_idx + n_match_ins] = new_instructions
@@ -98,14 +98,13 @@ class MutationPatternPool:
         return block
     
     
-    def print_mutations(self, old_instructions: List[Instruction], new_instructions: List[Instruction]) -> None:
+    def print_mutations(self, mutation_addr: int, old_instructions: List[Instruction], new_instructions: List[Instruction]) -> None:
         """
         Prints the differences between the old code and the new code of a certain mutation.
 
         :param old_instructions: List of the erased instructions that are part of a pattern defined by a match rule.
         :param new_instructions: List of instructions from a generator that replace the old instructions.
         """
-        mutation_addr: int = old_instructions[0].addr
         old_opcodes: List[str] = [ins.opcode for ins in old_instructions]
         new_opcodes: List[str] = []
 
@@ -132,7 +131,9 @@ class MutationPatternPool:
    
             old = old_opcodes[i] if i < len(old_opcodes) else ""
             new = new_opcodes[i] if i < len(new_opcodes) else [""]
-   
+            if 0 == i and "" == old:
+                old = "[insertion]"
+
             print("{:<35} | {:<35}".format(old, new[0]))
    
             # add extra lines for large byte sequences cases
