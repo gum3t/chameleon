@@ -155,7 +155,7 @@ mov_reg_value_to_reg: MutationPatternPool = MutationPatternPool(
     ],
     [                                                   # (generator, weight)
         (generator_mov_reg_reg_REG64_REG16, 1),
-        (generator_push_reg_pop_reg_REG64_REG16, 1), # TOFIX
+        (generator_push_reg_pop_reg_REG64_REG16, 1),
         (generator_mov_reg_reg_extra_code_REG64_REG16, 1),
         (generator_extra_code_mov_reg_reg_REG64_REG16, 1), 
         (generator_push_reg_extra_code_pop_reg_REG64_REG16, 4) 
